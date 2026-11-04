@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
 import { Dashboard, ProductsAdmin, CategoriesAdmin, BannersAdmin, ContentAdmin } from "./admin/AdminPages";
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path="products" element={<Products />} />
         <Route path="products/:slug" element={<ProductDetail />} />
+        <Route path="checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
         <Route path="*" element={<p className="soon">Coming soon</p>} />
       </Route>
       <Route path="/admin" element={<ProtectedRoute managerOnly><AdminLayout /></ProtectedRoute>}>
