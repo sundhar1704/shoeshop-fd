@@ -1,0 +1,22 @@
+.adm{display:flex;min-height:100vh;font-family:system-ui,sans-serif;background:#f4f6f6}
+.adm-side{width:220px;background:#2F4F4F;color:#fff;padding:20px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.adm-side h3{margin-bottom:16px}
+.adm-side a{color:#fff;padding:10px 12px;border-radius:8px;text-decoration:none}
+.adm-side a.active,.adm-side a:hover{background:rgba(255,255,255,.18)}
+.adm-side button{margin-top:auto;padding:10px;border:0;border-radius:8px;cursor:pointer}
+.adm-main{flex:1;padding:24px;min-width:0}
+.adm h2{margin-bottom:16px}
+.adm .card{background:#fff;padding:16px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.1);margin-bottom:20px}
+.adm .fgrid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.adm label{display:grid;gap:4px;font-size:14px}
+.adm input:not([type=checkbox]),.adm select,.adm textarea{padding:8px;border:1px solid #ccc;border-radius:6px;font:inherit}
+.adm .pri{background:#2F4F4F;color:#fff;border:0;padding:10px 18px;border-radius:6px;cursor:pointer;margin-top:12px;margin-right:8px}
+.adm .danger{background:#c0392b;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer}
+.adm .sec{padding:6px 10px;border-radius:6px;border:1px solid #2F4F4F;background:#fff;cursor:pointer;margin-right:6px}
+.adm .tbl{overflow-x:auto}
+.adm table{width:100%;border-collapse:collapse}
+.adm th,.adm td{padding:10px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
+.adm td img{width:48px;height:48px;object-fit:cover;border-radius:6px}
+.adm .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.adm .stat b{font-size:32px;display:block}
+@media(max-width:700px){.adm{flex-direction:column}.adm-side{width:100%;flex-direction:row;flex-wrap:wrap}}

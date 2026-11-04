@@ -1,0 +1,53 @@
+.brands-page {
+  max-width: 1375px;
+  margin: 40px auto 80px;
+  padding: 0 24px;
+}
+
+.brands-title {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 32px 24px;
+}
+
+.brands-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.brands-letter {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2f4f4f;
+}
+
+.brands-link {
+  font-size: 20px;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.brands-link:hover {
+  color: #ffa0a0;
+}
+
+.brands-msg {
+  text-align: center;
+  padding: 80px 0;
+  font-size: 18px;
+}
+
+@media (max-width: 600px) {
+  .brands-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
