@@ -7,7 +7,7 @@ import { FaMeta } from "react-icons/fa6";
 import api from "../services/api";
 
 const shop = [["New in", "/products?featured=true"], ["Women", "/products?category=womens"], ["Men", "/products?category=mens"],
-  ["Accessories", "/products?category=accessories"], ["Heels", "/products?search=heels"], ["About us", "/about"]];
+  ["Accessories", "/products?category=accessories"], ["Heels", "/products?q=heels"], ["About us", "/about"]];
 const info = [["Search", "/products"], ["Return & Exchange Policy", "/return-policy"], ["Privacy Policy", "/privacy-policy"],
   ["Terms of Service", "/terms"], ["Shipping Policy", "/shipping-policy"], ["Blogs", "/blogs"]];
 
