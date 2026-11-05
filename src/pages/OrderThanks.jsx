@@ -2,6 +2,7 @@
 // Route: /order-thanks/:order_number
 // Step 1: show a 5 second loading screen (data loads in the background)
 // Step 2: show the Thank You card with animation
+// The page always scrolls to the top so the tick is visible.
 // Reads: GET /api/orders/<order_number>/thanks/  (text is editable in Django admin -> Order page settings)
 
 import { useEffect, useState } from "react";
@@ -34,12 +35,12 @@ const DOTS = Array.from({ length: 22 }, (_, i) => {
 
 // Confetti pieces that fall from the top of the card.
 const CONFETTI = Array.from({ length: 28 }, (_, i) => ({
-  left: (i * 37) % 100,                 // % from left
-  size: 6 + (i % 4) * 3,                // px
-  delay: 0.9 + (i % 7) * 0.12,          // seconds
-  duration: 2.6 + (i % 5) * 0.45,       // seconds
-  drift: ((i % 2 ? 1 : -1) * (10 + (i % 5) * 8)), // sideways px
-  shade: i % 3,                         // 0, 1, 2 = colour choice
+  left: (i * 37) % 100,
+  size: 6 + (i % 4) * 3,
+  delay: 0.9 + (i % 7) * 0.12,
+  duration: 2.6 + (i % 5) * 0.45,
+  drift: ((i % 2 ? 1 : -1) * (10 + (i % 5) * 8)),
+  shade: i % 3,
   round: i % 2 === 0,
 }));
 
@@ -49,6 +50,16 @@ export default function OrderThanks() {
   const [error, setError] = useState("");
   const [ready, setReady] = useState(false);   // true after 5 seconds
   const [msgIndex, setMsgIndex] = useState(0); // which loading message
+
+  // 0) Go to the top as soon as this page opens
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [order_number]);
+
+  // 0b) Go to the top again when the Thank You card appears
+  useEffect(() => {
+    if (ready && data) window.scrollTo(0, 0);
+  }, [ready, data]);
 
   // 1) Load the order data in the background
   useEffect(() => {
