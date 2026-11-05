@@ -1,0 +1,175 @@
+/* frontend/src/styles/orderthanks.css
+   Thank You page only. Every class starts with "ty-" so it can never
+   affect any other page. */
+
+/* ===== 1. COLOURS (change the theme here) ===== */
+.ty-page {
+  --ty-green: #2f4f4f;        /* dark green from the Figma design */
+  --ty-green-dark: #263f3f;   /* button hover */
+  --ty-ink: #000;
+  --ty-white: #fff;
+
+  padding: 56px 20px 80px;
+}
+
+.ty-msg {
+  text-align: center;
+  padding: 60px 0;
+}
+
+/* ===== 2. CARD ===== */
+.ty-card {
+  max-width: 934px;
+  min-height: 626px;
+  margin: 0 auto;
+  padding: 48px 32px 56px;
+  box-sizing: border-box;
+  background: var(--ty-white);
+  border: 1px solid var(--ty-ink);
+  box-shadow: 4px 6px 8px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ===== 3. TICK CIRCLE + DOTS ===== */
+.ty-burst {
+  position: relative;
+  width: 280px;
+  height: 200px;
+  margin-bottom: 8px;
+}
+
+.ty-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 126px;
+  height: 126px;
+  margin: -63px 0 0 -63px;
+  border-radius: 50%;
+  background: var(--ty-green);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ty-pop 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.ty-tick {
+  width: 70px;
+  height: 70px;
+  fill: none;
+  stroke: var(--ty-white);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ty-tick path {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: ty-draw 0.45s ease-out 0.4s forwards;
+}
+
+.ty-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  background: var(--ty-green);
+  opacity: 0;
+  animation: ty-burst 0.7s ease-out both;
+}
+
+@keyframes ty-pop {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+
+@keyframes ty-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes ty-burst {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  to   { opacity: 1; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1); }
+}
+
+/* ===== 4. TEXT ===== */
+.ty-title {
+  margin: 0 0 14px;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--ty-ink);
+}
+
+.ty-text {
+  margin: 0 0 4px;
+  max-width: 600px;
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--ty-ink);
+}
+
+/* ===== 5. BUTTONS ===== */
+.ty-actions {
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 78px;
+}
+
+.ty-btn {
+  width: 274px;
+  height: 64px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 32px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ty-btn-light {
+  background: var(--ty-white);
+  color: var(--ty-ink);
+  border: 1px solid var(--ty-ink);
+}
+.ty-btn-light:hover { background: #f2f2f2; }
+
+.ty-btn-dark {
+  background: var(--ty-green);
+  color: var(--ty-white);
+  border: 1px solid var(--ty-ink);
+}
+.ty-btn-dark:hover { background: var(--ty-green-dark); }
+
+.ty-btn:focus-visible {
+  outline: 3px solid var(--ty-green);
+  outline-offset: 3px;
+}
+
+/* ===== 6. MOBILE ===== */
+@media (max-width: 700px) {
+  .ty-page { padding: 28px 14px 56px; }
+  .ty-card { min-height: 0; padding: 32px 16px 40px; }
+  .ty-burst { transform: scale(0.85); margin-bottom: -8px; }
+  .ty-title { font-size: 24px; }
+  .ty-text { font-size: 16px; }
+  .ty-actions { margin-top: 36px; gap: 16px; flex-direction: column; align-items: center; }
+  .ty-btn { width: 100%; max-width: 274px; height: 52px; font-size: 24px; }
+}
+
+/* ===== 7. Respect "reduce motion" setting ===== */
+@media (prefers-reduced-motion: reduce) {
+  .ty-circle, .ty-tick path, .ty-dot { animation: none; }
+  .ty-tick path { stroke-dashoffset: 0; }
+  .ty-dot { opacity: 1; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))); }
+}

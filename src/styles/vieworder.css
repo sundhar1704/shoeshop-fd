@@ -1,0 +1,163 @@
+/* frontend/src/styles/vieworder.css
+   View Order page only. Every class starts with "vo-". */
+
+/* ===== 1. COLOURS (change the theme here) ===== */
+.vo-page {
+  --vo-green: #2f4f4f;
+  --vo-green-dark: #263f3f;
+  --vo-grey: #f0f0f0;        /* light panel background (same as Track page panel) */
+  --vo-muted: #6b6b6b;
+  --vo-ink: #000;
+  --vo-white: #fff;
+
+  padding: 40px 20px 80px;
+}
+
+.vo-msg { text-align: center; padding: 60px 0; }
+
+/* ===== 2. CARD ===== */
+.vo-card {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 18px 24px;
+  box-sizing: border-box;
+  background: var(--vo-white);
+  border: 1px solid var(--vo-ink);
+}
+
+/* ===== 3. HEADER ===== */
+.vo-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 4px 14px;
+}
+
+.vo-back {
+  background: none;
+  border: 0;
+  padding: 4px;
+  font-size: 22px;
+  color: var(--vo-ink);
+  cursor: pointer;
+  display: flex;
+}
+.vo-back:focus-visible { outline: 3px solid var(--vo-green); }
+
+.vo-title { margin: 0; font-size: 32px; font-weight: 700; }
+
+.vo-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 6px 6px;
+  color: var(--vo-muted);
+  font-size: 18px;
+}
+.vo-meta-sub { font-size: 16px; align-items: center; }
+
+/* Status badge (colour follows the status) */
+.vo-status {
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--vo-green);
+  color: var(--vo-white);
+  font-size: 15px;
+}
+.vo-status-delivered { background: #2e7d32; }
+.vo-status-cancelled,
+.vo-status-returned { background: #b3261e; }
+
+.vo-h2 { margin: 18px 0 10px 6px; font-size: 22px; font-weight: 700; }
+
+/* ===== 4. PRODUCTS ===== */
+.vo-item {
+  display: flex;
+  gap: 18px;
+  margin: 0 6px 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #ddd;
+}
+.vo-item:last-of-type { border-bottom: 0; }
+
+.vo-img {
+  flex: 0 0 150px;
+  height: 150px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--vo-grey);
+}
+.vo-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.vo-info h3 { margin: 0; font-size: 24px; font-weight: 700; }
+.vo-name { margin: 0 0 8px; font-size: 20px; font-weight: 600; }
+.vo-line { margin: 0 0 3px; font-size: 17px; }
+.vo-strong { font-weight: 700; }
+
+/* ===== 5. PANELS (amount + shipping) ===== */
+.vo-panel {
+  background: var(--vo-grey);
+  padding: 8px 20px 18px;
+  margin: 10px 6px 0;
+}
+.vo-panel .vo-h2 { margin-left: 0; }
+
+.vo-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 0;
+  font-size: 18px;
+}
+.vo-total {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid #bdbdbd;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.vo-addr { margin: 0 0 4px; font-size: 17px; line-height: 1.4; overflow-wrap: anywhere; }
+
+/* ===== 6. BUTTONS ===== */
+.vo-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 24px 6px 0;
+}
+
+.vo-btn {
+  min-width: 200px;
+  height: 52px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--vo-ink);
+}
+.vo-btn-light { background: var(--vo-white); color: var(--vo-ink); }
+.vo-btn-light:hover { background: #f2f2f2; }
+.vo-btn-dark { background: var(--vo-green); color: var(--vo-white); }
+.vo-btn-dark:hover { background: var(--vo-green-dark); }
+.vo-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.vo-btn:focus-visible { outline: 3px solid var(--vo-green); outline-offset: 3px; }
+
+/* ===== 7. MOBILE ===== */
+@media (max-width: 600px) {
+  .vo-page { padding: 20px 10px 56px; }
+  .vo-title { font-size: 26px; }
+  .vo-meta { font-size: 15px; }
+  .vo-item { flex-direction: column; }
+  .vo-img { flex-basis: auto; width: 100%; height: 220px; }
+  .vo-panel { padding: 6px 14px 14px; }
+  .vo-btn { width: 100%; }
+}

@@ -11,6 +11,9 @@ import Cart from "./pages/Cart";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
+import OrderThanks from "./pages/OrderThanks";   // NEW
+import ViewOrder from "./pages/ViewOrder";       // NEW
+import TrackOrder from "./pages/TrackOrder";     // NEW
 import { Dashboard, ProductsAdmin, CategoriesAdmin, BannersAdmin, ContentAdmin } from "./admin/AdminPages";
 
 export default function App() {
@@ -26,6 +29,9 @@ export default function App() {
         <Route path="products" element={<Products />} />
         <Route path="products/:slug" element={<ProductDetail />} />
         <Route path="checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+        <Route path="order-thanks/:order_number" element={<ProtectedRoute><OrderThanks /></ProtectedRoute>} />  {/* NEW */}
+        <Route path="view-order/:order_number" element={<ProtectedRoute><ViewOrder /></ProtectedRoute>} />      {/* NEW */}
+        <Route path="track-order/:order_number" element={<ProtectedRoute><TrackOrder /></ProtectedRoute>} />    {/* NEW */}
         <Route path="*" element={<p className="soon">Coming soon</p>} />
       </Route>
       <Route path="/admin" element={<ProtectedRoute managerOnly><AdminLayout /></ProtectedRoute>}>
