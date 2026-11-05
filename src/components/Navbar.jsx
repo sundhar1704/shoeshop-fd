@@ -9,7 +9,7 @@ import api from "../services/api";
 import logo from "../assets/logo.png";
 
 const MIN_CHARS = 2;      // start suggesting after this many letters
-const WAIT_MS = 300;      // wait after typing stops, so we don't call the API on every key
+const WAIT_MS = 300;      // wait after typing stops
 const MAX_ITEMS = 6;      // how many suggestions to show
 
 // Inline styles (so no CSS file is touched)
@@ -22,7 +22,10 @@ const rowBase = {
   display: "flex", alignItems: "center", gap: 12, padding: "10px 18px",
   cursor: "pointer", fontSize: 16, color: "#000", textDecoration: "none",
 };
-const thumb = { width: 40, height: 40, objectFit: "cover", borderRadius: 6, background: "#eee", flexShrink: 0 };
+const thumb = {
+  width: 40, height: 40, objectFit: "cover", borderRadius: 6,
+  background: "#eee", flexShrink: 0,
+};
 
 // Make the typed letters bold inside the product name
 function Highlight({ text, word }) {
@@ -43,7 +46,7 @@ export default function Navbar() {
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [active, setActive] = useState(-1);   // row chosen with arrow keys
+  const [active, setActive] = useState(-1);
   const navigate = useNavigate();
   const formRef = useRef(null);
   const lastCall = useRef(0);
@@ -76,13 +79,17 @@ export default function Navbar() {
     const id = ++lastCall.current;
     const timer = setTimeout(async () => {
       try {
-        const { data } = await api.get("/shop/products/", { params: { q: word, page_size: MAX_ITEMS } });
-        if (id !== lastCall.current) return;   // an older answer, ignore it
-        const list = (data.results || []).map((p) => ({
-          id: p.id,
-          name: p.name || p.title || "",
-          image: p.image || p.main_image || p.thumbnail || "",
-        })).filter((p) => p.name);
+        const { data } = await api.get("/shop/products/", {
+          params: { q: word, page_size: MAX_ITEMS },
+        });
+        if (id !== lastCall.current) return; // older answer, ignore it
+        const list = (data.results || [])
+          .map((p) => ({
+            id: p.id,
+            name: p.name || p.title || "",
+            image: p.image || p.main_image || p.thumbnail || "",
+          }))
+          .filter((p) => p.name);
         setItems(list);
         setActive(-1);
       } catch {
@@ -94,7 +101,7 @@ export default function Navbar() {
     return () => clearTimeout(timer);
   }, [q]);
 
-  // Close the list when clicking anywhere outside the search bar
+  // Close the list when clicking outside the search bar
   useEffect(() => {
     const away = (e) => {
       if (formRef.current && !formRef.current.contains(e.target)) setOpen(false);
@@ -115,9 +122,15 @@ export default function Navbar() {
   const showBox = open && word.length >= MIN_CHARS;
 
   return (
-    <header className="topbar">
+    <header className="topbar" style={{ overflow: "visible", position: "relative", zIndex: 50 }}>
       <Link to="/"><img src={logo} alt="StepUp" /></Link>
-      <form className="search" onSubmit={search} ref={formRef} style={{ position: "relative" }}>
+
+      <form
+        className="search"
+        onSubmit={search}
+        ref={formRef}
+        style={{ position: "relative", overflow: "visible" }}
+      >
         <FaSearch onClick={() => goSearch()} style={{ cursor: "pointer" }} />
         <input
           placeholder="Search here"
@@ -139,7 +152,9 @@ export default function Navbar() {
                 onMouseEnter={() => setActive(i)}
                 onClick={() => goSearch(p.name)}
               >
-                {p.image ? <img src={p.image} alt="" style={thumb} /> : <FaSearch style={{ opacity: 0.5 }} />}
+                {p.image
+                  ? <img src={p.image} alt="" style={thumb} />
+                  : <FaSearch style={{ opacity: 0.5 }} />}
                 <Highlight text={p.name} word={word} />
               </div>
             ))}
