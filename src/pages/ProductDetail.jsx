@@ -45,7 +45,16 @@ export default function ProductDetail() {
   );
   const maxQty = sizes.find((s) => s.size === size)?.stock || 1;
   const colorName = p.colors?.find((c) => c.id === color)?.name || "";
-  const pg = p.page || {};
+  const pg = {
+  secure_title: "Secure Checkout With",
+  size_help_text: "Unsure about your size? Let's connect",
+  info_1: "COD Available",
+  info_2: "24 Hour Dispatch",
+  info_3: "7 Days easy return & exchange",
+  details_title: "Product Details",
+  reviews_title: "Reviews:",
+  ...(p.page || {}),
+};
   const logos = (place) => (p.logos || []).filter((l) => l.place === place);
 
   const loggedIn = () => {
