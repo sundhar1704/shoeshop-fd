@@ -6,6 +6,7 @@
 .ty-page {
   --ty-green: #2f4f4f;        /* dark green from the Figma design */
   --ty-green-dark: #263f3f;   /* button hover */
+  --ty-green-light: #6f9a8d;  /* confetti / ripple */
   --ty-ink: #000;
   --ty-white: #fff;
 
@@ -17,8 +18,97 @@
   padding: 60px 0;
 }
 
-/* ===== 2. CARD ===== */
+/* ===== 2. LOADING SCREEN (first 5 seconds) ===== */
+.ty-page-loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ty-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: ty-fade 0.4s ease-out both;
+}
+
+.ty-spinner {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 28px;
+}
+
+.ty-spinner-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 5px solid rgba(47, 79, 79, 0.15);
+  border-top-color: var(--ty-green);
+  animation: ty-spin 0.9s linear infinite;
+}
+
+.ty-spinner-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: var(--ty-green);
+  animation: ty-beat 1.2s ease-in-out infinite;
+}
+
+.ty-load-title {
+  margin: 0 0 8px;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ty-ink);
+  animation: ty-msg-in 0.5s ease-out both;
+}
+
+.ty-load-sub {
+  margin: 0 0 26px;
+  font-size: 16px;
+  color: #555;
+}
+
+.ty-bar {
+  width: 260px;
+  max-width: 80vw;
+  height: 6px;
+  border-radius: 6px;
+  background: rgba(47, 79, 79, 0.15);
+  overflow: hidden;
+}
+
+.ty-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 6px;
+  background: var(--ty-green);
+  animation-name: ty-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes ty-spin  { to { transform: rotate(360deg); } }
+@keyframes ty-beat  { 0%, 100% { transform: scale(0.7); } 50% { transform: scale(1); } }
+@keyframes ty-fill  { to { width: 100%; } }
+@keyframes ty-fade  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ty-msg-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 3. CARD ===== */
 .ty-card {
+  position: relative;
+  overflow: hidden;
   max-width: 934px;
   min-height: 626px;
   margin: 0 auto;
@@ -31,9 +121,15 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  animation: ty-card-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
-/* ===== 3. TICK CIRCLE + DOTS ===== */
+@keyframes ty-card-in {
+  from { opacity: 0; transform: translateY(40px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ===== 4. TICK CIRCLE + RIPPLES + DOTS ===== */
 .ty-burst {
   position: relative;
   width: 280px;
@@ -54,7 +150,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: ty-pop 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  animation: ty-pop 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) 0.3s both;
 }
 
 .ty-tick {
@@ -70,9 +166,25 @@
 .ty-tick path {
   stroke-dasharray: 40;
   stroke-dashoffset: 40;
-  animation: ty-draw 0.45s ease-out 0.4s forwards;
+  animation: ty-draw 0.5s ease-out 0.75s forwards;
 }
 
+/* Ripple rings that grow out of the circle */
+.ty-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 126px;
+  height: 126px;
+  margin: -63px 0 0 -63px;
+  border-radius: 50%;
+  border: 2px solid var(--ty-green-light);
+  opacity: 0;
+  animation: ty-ripple 2.2s ease-out 0.9s infinite;
+}
+.ty-ring-2 { animation-delay: 1.6s; }
+
+/* Dots: first burst out, then twinkle softly */
 .ty-dot {
   position: absolute;
   left: 50%;
@@ -80,7 +192,10 @@
   border-radius: 50%;
   background: var(--ty-green);
   opacity: 0;
-  animation: ty-burst 0.7s ease-out both;
+  animation-name: ty-burst, ty-twinkle;
+  animation-timing-function: ease-out, ease-in-out;
+  animation-fill-mode: both, none;
+  animation-iteration-count: 1, infinite;
 }
 
 @keyframes ty-pop {
@@ -92,12 +207,62 @@
   to { stroke-dashoffset: 0; }
 }
 
+@keyframes ty-ripple {
+  0%   { opacity: 0.55; transform: scale(1); }
+  100% { opacity: 0;    transform: scale(2.2); }
+}
+
 @keyframes ty-burst {
   from { opacity: 0; transform: translate(-50%, -50%) scale(0); }
   to   { opacity: 1; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1); }
 }
 
-/* ===== 4. TEXT ===== */
+@keyframes ty-twinkle {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+
+/* ===== 5. CONFETTI ===== */
+.ty-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ty-conf {
+  position: absolute;
+  top: -20px;
+  opacity: 0;
+  animation-name: ty-fall;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+}
+.ty-conf-round { border-radius: 50%; }
+.ty-conf-0 { background: var(--ty-green); }
+.ty-conf-1 { background: var(--ty-green-light); }
+.ty-conf-2 { background: #cfe3dc; }
+
+@keyframes ty-fall {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+  10%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--drift), 640px) rotate(540deg); }
+}
+
+/* ===== 6. TEXT + BUTTONS (fade up one by one) ===== */
+.ty-rise {
+  animation: ty-rise 0.6s ease-out both;
+}
+.ty-d1 { animation-delay: 1.0s; }
+.ty-d2 { animation-delay: 1.2s; }
+.ty-d3 { animation-delay: 1.4s; }
+.ty-d4 { animation-delay: 1.65s; }
+
+@keyframes ty-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .ty-title {
   margin: 0 0 14px;
   font-size: 34px;
@@ -113,7 +278,7 @@
   color: var(--ty-ink);
 }
 
-/* ===== 5. BUTTONS ===== */
+/* ===== 7. BUTTONS ===== */
 .ty-actions {
   margin-top: 56px;
   display: flex;
@@ -134,8 +299,14 @@
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
+
+.ty-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.25);
+}
+.ty-btn:active { transform: translateY(0); }
 
 .ty-btn-light {
   background: var(--ty-white);
@@ -156,7 +327,7 @@
   outline-offset: 3px;
 }
 
-/* ===== 6. MOBILE ===== */
+/* ===== 8. MOBILE ===== */
 @media (max-width: 700px) {
   .ty-page { padding: 28px 14px 56px; }
   .ty-card { min-height: 0; padding: 32px 16px 40px; }
@@ -165,11 +336,16 @@
   .ty-text { font-size: 16px; }
   .ty-actions { margin-top: 36px; gap: 16px; flex-direction: column; align-items: center; }
   .ty-btn { width: 100%; max-width: 274px; height: 52px; font-size: 24px; }
+  .ty-load-title { font-size: 20px; }
 }
 
-/* ===== 7. Respect "reduce motion" setting ===== */
+/* ===== 9. Respect "reduce motion" setting ===== */
 @media (prefers-reduced-motion: reduce) {
-  .ty-circle, .ty-tick path, .ty-dot { animation: none; }
+  .ty-card, .ty-circle, .ty-tick path, .ty-dot, .ty-ring,
+  .ty-conf, .ty-rise, .ty-loader, .ty-load-title { animation: none; }
+  .ty-spinner-ring, .ty-spinner-core { animation: none; }
+  .ty-bar span { animation: none; width: 100%; }
   .ty-tick path { stroke-dashoffset: 0; }
   .ty-dot { opacity: 1; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))); }
+  .ty-ring, .ty-conf { display: none; }
 }
