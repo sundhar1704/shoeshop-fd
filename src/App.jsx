@@ -27,7 +27,7 @@ export default function App() {
         <Route path="register" element={<Register />} />
         <Route path="cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path="products" element={<Products />} />
-        <Route path="products/:slug" element={<ProductDetail />} />
+        <Route path="offers" element={<Products offersOnly />} />
         <Route path="checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
         <Route path="order-thanks/:order_number" element={<ProtectedRoute><OrderThanks /></ProtectedRoute>} />  {/* NEW */}
         <Route path="view-order/:order_number" element={<ProtectedRoute><ViewOrder /></ProtectedRoute>} />      {/* NEW */}

@@ -16,7 +16,7 @@ const listAnim = {
   transition: { duration: 0.2, ease: "easeOut" },
 };
 
-export default function Products() {
+export default function Products({ offersOnly = false }) {
   const [params, setParams] = useSearchParams();
   const [filters, setFilters] = useState(null);
   const [items, setItems] = useState([]);
@@ -53,6 +53,7 @@ export default function Products() {
       const v = params.get(k);
       if (v) query[k] = v;
     });
+      if (offersOnly) query.offer = "true";
     query.page = viewAll ? 1 : page;
     query.page_size = viewAll ? 100 : PAGE_SIZE;
     setLoading(true);
@@ -67,7 +68,7 @@ export default function Products() {
         setCount(0);
       })
       .finally(() => setLoading(false));
-  }, [params]);
+    }, [params, offersOnly]);
 
   const update = (key, value) => {
     const next = new URLSearchParams(params);
